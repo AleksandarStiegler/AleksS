@@ -1,18 +1,16 @@
 package praksa;
 
 import java.io.BufferedReader;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Poruka extends Osoba {
 
 	String message;
-
+	int srecan, tuzan, zaljubljen;
 	public String poruka() {
 		return message;
 	}
@@ -40,95 +38,42 @@ public class Poruka extends Osoba {
 	Poruka(String n, String k, String p, String dopisivanje) {
 		super(n, k, p);
 		this.message = loadMessages(dopisivanje);
-
-	}
-
-	public int izbrojiSrecan(String p) {
-		List<String> srecan = new ArrayList<String>();
-		File f = new File("resource/message_logs/" + p);
-
-		int k = 0;
-		Pattern pat = Pattern.compile("\\🙂|\\😄|\\|😍");
-		try {
-			BufferedReader bfr = new BufferedReader(new FileReader(f));
-			String l;
-
-			while ((l = bfr.readLine()) != null) {
-				srecan.add(l);
-			}
-			for (String s : srecan) {
-				Matcher mat = pat.matcher(s);
-				if (mat.find()) {
-					k++;
-				}
-
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return k;
+		srecan = 0;
+		tuzan = 0;
+		zaljubljen = 0;
 
 	}
 	
-	public int izbrojiTuzan(String p) {
-		List<String> srecan = new ArrayList<String>();
-		File f = new File("resource/message_logs/" + p);
-
-		int k = 0;
-		Pattern pat = Pattern.compile("\\🤬|\\👿|\\|😢|\\😞");
-		try {
-			BufferedReader bfr = new BufferedReader(new FileReader(f));
-			String l;
-
-			while ((l = bfr.readLine()) != null) {
-				srecan.add(l);
-			}
-			for (String s : srecan) {
-				Matcher mat = pat.matcher(s);
-				if (mat.find()) {
-					k++;
-				}
-
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return k;
-
+	
+	public int srecan() {
+		return srecan;
 	}
-	public int izbrojiZaljubljen(String p) {
-		List<String> srecan = new ArrayList<String>();
-		File f = new File("resource/message_logs/" + p);
-
-		int k = 0;
-		Pattern pat = Pattern.compile("\\|😘\\|😍");
-		try {
-			BufferedReader bfr = new BufferedReader(new FileReader(f));
-			String l;
-
-			while ((l = bfr.readLine()) != null) {
-				srecan.add(l);
-			}
-			for (String s : srecan) {
-				Matcher mat = pat.matcher(s);
-				if (mat.find()) {
-					k++;
-				}
-
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return k;
-
+	
+	public int tuzan() {
+		return tuzan;
 	}
+	
+	public int zaljubljen() {
+		return zaljubljen;
+	}
+	
+	public void postaviSrecan(int n) {
+		this.srecan = n;
+	}
+	public void postaviTuzan(int n) {
+		this.tuzan = n;
+	}
+	public void postaviZaljubljen(int n) {
+		this.zaljubljen = n;
+	}
+
 
 	public int brojPoruka(String s) {
 		int k = 0;
 		try {
-			BufferedReader bfr = new BufferedReader(new FileReader("resource/message_logs/" + s));
+			BufferedReader b = new BufferedReader(new FileReader("resource/message_logs/" + s));
 			String l;
-			while ((l = bfr.readLine()) != null) {
+			while ((l = b.readLine()) != null) {
 				String niz[] = l.split(",");
 				if (niz.length > 1) {
 					k++;
@@ -139,5 +84,64 @@ public class Poruka extends Osoba {
 		}
 		return k;
 	}
+	public  int izbrojiSrecan(String string) {
+		int sr = 0;
+		File filesrecan = new File("resource/message_logs/"+string);
+		Pattern patSrecan = Pattern.compile("\\😍|\\😄|\\🙂");
+		String line;
+		try {
+			BufferedReader bfr = new BufferedReader(new FileReader(filesrecan));
+			while((line = bfr.readLine()) != null) {
+				Matcher matSrecan = patSrecan.matcher(line);
+				if(matSrecan.find()) {
+					sr++;
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return sr;
+	}
+	
+	public int izbrojiTuzan(String string) {
+		int tu = 0;
+		File filetuzan = new File("resource/message_logs/"+string);
+		Pattern patTuzan = Pattern.compile("\\😢|\\😭|\\👿|\\😞");
+		String line;
+		try {
+			BufferedReader bfr = new BufferedReader(new FileReader(filetuzan));
+			while((line = bfr.readLine()) != null) {
+				Matcher matTuzan = patTuzan.matcher(line);
+				if(matTuzan.find()) {
+					tu++;
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return tu;
+	}
+	
+	
+	public int izbrojiZaljubljen(String string) {
+		int zalj = 0;
+		File filezaljubljen = new File("resource/message_logs/"+string);
+		Pattern patZaljubljen = Pattern.compile("\\😍|\\😘");
+		String line;
+		try {
+			BufferedReader bfr = new BufferedReader(new FileReader(filezaljubljen));
+			while((line = bfr.readLine()) != null) {
+				Matcher matZaljubljen = patZaljubljen.matcher(line);
+				if(matZaljubljen.find()) {
+					zalj++;
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return zalj;
+	}
+	
+	
 
 }

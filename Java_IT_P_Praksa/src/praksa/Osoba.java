@@ -6,7 +6,7 @@ public class Osoba {
 	String name;
 	String kuca;
 	String fajlporuka;
-	int srecan, tuzan, zaljubljen;
+	
 	
 	// Pravimo konstruktor za osobu ideja je da unutar njega cuvamo podatke o 
 	// trenutnom stanju psihe
@@ -14,9 +14,7 @@ public class Osoba {
 		this.name = n;
 		this.kuca = k;
 		this.fajlporuka = p;
-		srecan = 0;
-		tuzan = 0;
-		zaljubljen = 0;
+		
 	}
 	
 	// Metode za vracanje zeljenih informacija
@@ -31,27 +29,7 @@ public class Osoba {
 		return fajlporuka;
 	}
 	
-	public int srecan() {
-		return srecan;
-	}
 	
-	public int tuzan() {
-		return tuzan;
-	}
-	
-	public int zaljubljen() {
-		return zaljubljen;
-	}
-	
-	public void postaviSrecan(int n) {
-		this.srecan = n;
-	}
-	public void postaviTuzan(int n) {
-		this.srecan = n;
-	}
-	public void postaviZaljubljen(int n) {
-		this.srecan = n;
-	}
 	
 	
 
